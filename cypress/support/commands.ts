@@ -1,37 +1,38 @@
-/// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+import HomePage from '../support/page-objects/HomePage';
+import LoginPopup from '../support/page-objects/LoginPopup';
+
+const homePage = new HomePage();
+const loginPopup = new LoginPopup();
+
+Cypress.Commands.add('loginUI', (email: string, password: string) => {
+    homePage.visit();
+    homePage.clickLoginBtn();
+
+    loginPopup.enterEmail(email);
+    loginPopup.enterPassword(password);
+    loginPopup.clickLoginBnt();
+
+    cy.get('body').then(($body) => {
+        if ($body.find('.sale-pop').length > 0) {
+            const $popup = $body.find('.sale-pop');
+            if ($popup.is(':visible')) {
+                cy.wrap($popup).invoke('hide');
+            }
+        }
+    });
+});
+
+Cypress.Commands.add('hideSalePopup', () => {
+    cy.get('body').then(($body) => {
+        const $popup = $body.find('.sale-pop');
+        const $overlay = $body.find('.pop__overlay');
+
+        if ($popup.length > 0 && $popup.is(':visible')) {
+            cy.wrap($popup).invoke('hide');
+        }
+
+        if ($overlay.length > 0 && $overlay.is(':visible')) {
+            cy.wrap($overlay).invoke('remove');
+        }
+    });
+});

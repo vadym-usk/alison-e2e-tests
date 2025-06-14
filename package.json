@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:headless": "CYPRESS_BASE_URL=https://alison.com CYPRESS_USER_EMAIL=fixel69048@calorpg.com CYPRESS_USER_PASSWORD=fixel69048@calorpg.com cypress run",
+    "test:headed": "CYPRESS_BASE_URL=https://alison.com CYPRESS_USER_EMAIL=fixel69048@calorpg.com CYPRESS_USER_PASSWORD=fixel69048@calorpg.com cypress open",
+    "cy:run:prod": "CYPRESS_BASE_URL=https://alison.com CYPRESS_USER_EMAIL=fixel69048@calorpg.com CYPRESS_USER_PASSWORD=fixel69048@calorpg.com cypress run"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
   "devDependencies": {
     "@types/node": "^24.0.1",
     "cypress": "^14.4.1",
+    "dotenv": "^16.5.0",
     "typescript": "^5.8.3"
   }
 }
