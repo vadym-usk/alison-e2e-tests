@@ -55,7 +55,7 @@ project-root/
 3. **Configure environment variables**
    - Create a `.env` file in the project root with the following variables:
      ```env
-     CYPRESS_BASE_URL=https://alison.com
+     CYPRESS_BASE_URL=https://example.com
      CYPRESS_USER_EMAIL=your_email@example.com
      CYPRESS_USER_PASSWORD=your_password
      ```
